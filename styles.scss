@@ -1,0 +1,157 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:wght@200;300;400;500;600;700&amp;display=swap);
+@import url(https://fonts.googleapis.com/css?family=Oswald:wght@200;300;400;500;600;700&amp;display=swap);
+
+$calendar-font-family:Roboto;
+$calendar-font-color:#000;
+$calendar-font-color-disabled: #b4b4b4;
+$calendar-date-font-size:14px;
+$calendar-header-font-size:14px;
+$calendar-header-font-weight:700;
+
+$calendar-background-color:#fff;
+$calendar-background-color-current: #dfecf5;
+$calendar-border-color:#dcdcdc;
+
+$calendar-grid-min-width:83px;
+$calendar-grid-max-width:100px;
+$calendar-grid-row-height:80px;
+
+$calendar-item-color-default: #0097a7;
+
+// for small calendar element
+$calendar-sm-has-item-font-color:#fff;
+$calendar-sm-min-grid-width:36px;
+$calendar-sm-max-grid-width:56px;
+$calendar-sm-grid-row-height:32px;
+$calendar-sm-date-font-size:.65rem;
+$calendar-sm-item-font-size:.75rem;
+
+.kpic-calendar {
+    font-family: $calendar-font-family;
+    color: $calendar-font-color;
+
+    .kpic-box {
+        // shared code by header and calendar day boxes.
+        height: 100%;
+        width: 100%;
+        background-color: $calendar-background-color;
+        border: 1px solid $calendar-border-color;
+    }
+
+    .kpic-header-row {
+        display: grid;
+        grid-template-columns: repeat(7, minmax($calendar-grid-min-width, $calendar-grid-max-width));
+        grid-template-rows: $calendar-grid-row-height * 0.5;
+
+        .kpic-box {
+            .kpic-dow-text {
+                font-size: $calendar-header-font-size;
+                font-weight:$calendar-header-font-weight;
+                margin: 4px 4px;
+            }
+        }
+    }
+
+    .kpic-grid {
+        display: grid;
+        grid-template-columns: repeat(7, minmax($calendar-grid-min-width, $calendar-grid-max-width));
+        grid-template-rows: repeat(6, $calendar-grid-row-height);
+
+        .kpic-box {
+
+            .kpic-date-text {
+                font-size: $calendar-date-font-size;
+                margin: 4px 4px;
+            }
+
+            &.kpic-date-disabled {
+                color: $calendar-font-color-disabled;
+            }
+
+            &.kpic-date-current {
+                background-color: $calendar-background-color-current;
+            }
+
+            .kpic-data-items {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: nowrap;
+                place-items: center;
+                gap: .25em;
+
+                .kpic-data-item {
+                    width: 90%;
+                    min-height: 5px;
+                    border-radius: 25px;
+
+                    &.kpic-data-item-default {
+                        background-color: $calendar-item-color-default;
+                        border: 1px solid $calendar-item-color-default;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.kpic-calendar-sm {
+    @extend .kpic-calendar;
+
+    .kpic-header-row {
+        display: grid;
+        grid-template-columns: repeat(7, minmax($calendar-sm-min-grid-width, $calendar-sm-max-grid-width));
+        grid-template-rows: $calendar-sm-grid-row-height * 0.75;
+
+        .kpic-box {
+            .kpic-dow-text {
+                font-size: $calendar-sm-date-font-size;
+            }
+        }
+    }
+
+    .kpic-grid {
+        display: grid;
+        grid-template-columns: repeat(7, minmax($calendar-sm-min-grid-width, $calendar-sm-max-grid-width));
+        grid-template-rows: repeat(6, $calendar-sm-grid-row-height);
+
+        .kpic-box {
+            padding: 0 0;
+            margin: 0 0;
+            position: relative;
+
+            .kpic-data-items {
+                position: relative;
+
+                .kpic-data-item {
+                    width: 100%;
+                    height: $calendar-sm-grid-row-height;
+                    position: absolute;
+                    top: -1px;
+                    left: -1px;
+                    color: $calendar-sm-has-item-font-color;
+                    font-size: $calendar-sm-item-font-size;
+                    border-radius: 0;
+
+                    .kpic-data-item-inner {
+                        position: absolute;
+                        bottom: 4px;
+                        right: 8px;
+                    }
+                }
+            }
+
+            &.kpic-has-items {
+                .kpic-date-text {
+                    color: $calendar-sm-has-item-font-color;
+                }
+            }
+
+            .kpic-date-text {
+                font-size: $calendar-sm-date-font-size;
+                margin: 2px 0 0 2px;
+                z-index: 1;
+                position: absolute;
+            }
+        }
+    }
+}

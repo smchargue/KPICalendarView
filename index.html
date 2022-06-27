@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Legend Calendar Test</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="kpicalendar.js"></script>
+
+<style>
+    
+    .kpic-danger {
+        background-color:#B3001B;        
+    }
+    .kpic-warning {
+        background-color:#F6AE2D;
+    }
+    .kpic-success {
+        background-color:#6B8F71;
+    }
+    
+/* for prototype testing */
+body {
+  background-color:#ccc;
+
+}
+.container {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  margin:20px 20px;
+  gap:3em;
+}
+
+div[class^='kpic-calendar'] {
+    margin-top:20px;
+}
+
+.h3 {
+    font-size:1.5em;
+}
+.detail,.h3 {
+    padding:8px;
+    background-color: #333;
+    color:#fff;
+}
+
+.toolbar {    
+    background-color: #143F6A;
+    color:#fff;
+    width:100%;
+    display:flex;
+    gap:2em;
+    padding:20px 20px;
+    
+}
+.toolbar .current-month {
+    font-size:1.2em;
+    color:#fff;
+    min-width:90px;
+    text-align:center;
+}
+</style>
+
+<body>
+    <div class="toolbar">
+        <button onclick="addMonth(-1);" type="button">Prev</button>
+        <div class="current-month"></div>
+        <button onclick="addMonth(1);" type="button">Next</button>
+        <input type="date" id="testDateInput" name="testDateInput" value="2022-06-24">        
+        <button onclick="lgc2.resetLegendItems();lgc1.resetLegendItems();" type="button">Reset</button>
+        <label for="cssName">Select a KPI class:</label>
+        <select name="cssName" id="cssName">
+            <option value="kpic-success">success</option>
+            <option value="kpic-danger">danger</option>
+            <option value="kpic-warning">warning</option>            
+        </select>
+    </div>
+    
+    
+    <div class="container">
+        <div>
+            <div class="h3">Standard KPI Calendar View</div>
+            <div class="detail">Displays a "KPI" Calendar with a color coded bar for each data Item. The test toolbar above will allow you to test adding elements.</div>
+            <div id="kpic1" class="kpic-calendar" data-truncateview="1"></div>
+        </div>
+        <div>
+            <div class="h3">Small KPI Calendar View</div>
+            <div class="detail">Displays a Small "KPI" Calendar with the day box filled with a color coded KPI; support only 1 data item per day</div>
+            <div id="kpic2" class="kpic-calendar-sm" data-truncateview="0"></div>
+    </div>
+    </div>
+    <div>
+        
+    </div>
+    <script defer="defer">
+        var lgc, lgc2;
+        jQuery(document).ready(function () {
+            lgc1 = new kpiCalendar('#kpic1');
+            lgc2 = new kpiCalendar('#kpic2');
+            lgc1.setMonthDisplay('.toolbar .current-month','long');
+
+            /* testing code */
+            lgc2.addLegendItem('2022-06-15','kpic-danger','','3.5');
+            lgc2.addLegendItem('2022-06-17','kpic-success','','9.2');
+            lgc2.addLegendItem('2022-06-19','kpic-warning','','6.0');
+            lgc2.addLegendItem('2022-07-20','kpic-success','','8.0');
+
+            lgc1.addLegendItem('2022-06-15','kpic-success');
+            lgc1.addLegendItem('2022-06-17','kpic-success');
+            lgc1.addLegendItem('2022-06-19','kpic-warning');
+            lgc1.addLegendItem('2022-07-20','kpic-success');
+            
+
+            lgc1.addLegendItem('2022-06-15','kpic-danger');
+
+            jQuery('#testDateInput').on("change", (e) => {
+                var d = e.target.value;
+                var dt = new Date( d + " 12:00:00");
+                lgc1.setMonth( dt.getMonth(), dt.getFullYear());
+                lgc2.setMonth( dt.getMonth(), dt.getFullYear());
+                var cssName = jQuery('#cssName').val(); 
+                lgc1.addLegendItem(d, cssName);
+
+                // mimic a missing time KPI based on cssName 
+                switch (cssName) {
+                    case 'kpic-danger' : 
+                        lgc2.addLegendItem(d, cssName, '', '3.2');
+                        break;
+                    case 'kpic-warning' :
+                        lgc2.addLegendItem(d, cssName, '', '6.2');
+                        break;
+                    default : 
+                        lgc2.addLegendItem(d, cssName, '', '8.2');
+                }
+                
+            });
+        });
+
+        function addMonth(v) {
+            lgc1.addMonth(v);
+            lgc2.addMonth(v);
+            var dateStr = lgc1.activeDate.toISOString().split('T')[0]
+            jQuery('#testDateInput').val(dateStr);
+        }
+    </script>
+</body>
+
+</html>
