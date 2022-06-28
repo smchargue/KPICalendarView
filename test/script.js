@@ -85,3 +85,17 @@ function addMonth(v) {
     var dateStr = lgc1.activeDate.toISOString().split('T')[0]
     jQuery('#testDateInput').val(dateStr);
 }
+
+function AddThese() {
+   
+           var newItem = {
+            "key" : jQuery('input#key').val(),
+            "label" : jQuery('input#label').val(),
+            "cssClass" : jQuery('input#css').val(),
+            "title" : jQuery('input#title').val(),
+            "text" : jQuery('input#text').val(),
+            "color" : jQuery('input#color').val(),
+           }
+            lgc1.addItem(newItem);
+            lgc2.addItem(newItem);
+}

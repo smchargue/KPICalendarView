@@ -37,13 +37,33 @@
             <div>
                 <input type="checkbox" name="showsmall" id="showsmall"
                     onchange="jQuery('.kpic-calendar,.kpic-calendar-fill').toggleClass('kpic-calendar-sm')">
-                <label for="showsmall"> Show small calendar view</label><br>
+                <label for="showsmall"> Toggle small calendar view</label><br>
             </div>
             <div>
                 <input type="checkbox" checked name="showlegend" id="showlegend"
                     onchange="toggleLegends(this)">
-                <label for="showsmall"> Show small calendar view</label><br>
+                <label for="showsmall"> Toggle Legend</label><br>
             </div>
+        </div>
+        <div class="toolbar" style="display:flex; flex-wrap:wrap">
+            <label for="key">YYYY-mm-dddd</label>
+            <input type="text" id="key" placeholder="ISO Date" />
+
+            <label for="label">Legend Label</label>
+            <input type="text" id="label" placeholder="label" />
+
+            <label for="css">CSS Class</label>
+            <input type="text" id="css" placeholder="css class" />
+
+            <label for="title">Title Text</label>
+            <input type="text" id="title" placeholder="title" />
+
+            <label for="text">Inner Text</label>
+            <input type="text" id="text" placeholder="text" />
+
+            <label for="color">CSS Color Code</label>
+            <input type="text" id="color" placeholder="color" />
+            <button onclick="AddThese()" type="button">Add Data</button>
         </div>
     </div>
 

@@ -202,6 +202,9 @@
   min-height: 5px;
   border-radius: 25px;
 }
+.kpic-calendar .kpic-grid .kpic-box .kpic-data-items .kpic-data-item .kpic-data-item-inner {
+  display: none;
+}
 .kpic-calendar .kpic-grid .kpic-box .kpic-data-items .kpic-data-item.kpic-data-item-default {
   background-color: #0097a7;
   border: 1px solid #0097a7;

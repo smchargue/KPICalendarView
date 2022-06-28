@@ -195,11 +195,16 @@ $calendar-legend-font-size: 0.9rem;
                     min-height: 5px;
                     border-radius: 25px;
 
+                    .kpic-data-item-inner {
+                        display:none;
+                    }
+
                     &.kpic-data-item-default {
                         background-color: $calendar-item-color-default;
                         border: 1px solid $calendar-item-color-default;
                     }
                 }
+                
             }
 
             .kpic-data-items-count {
