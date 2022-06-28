@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Legend Calendar Test</title>
+    <link rel="stylesheet" href="../kpicalendar.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2022.2.621/styles/kendo.default-main.min.css" />
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="../kpicalendar.js"></script>
+<script src="script.js"></script>
+
+<body>
+    <div class="tbcontainer">
+        <div class="toolbar">
+            <button onclick="addMonth(-1);" type="button">Prev</button>
+            <div class="current-month"></div>
+            <button onclick="addMonth(1);" type="button">Next</button>
+            <input type="date" id="testDateInput" name="testDateInput" value="">
+            <button onclick="lgc2.resetItems();lgc1.resetItems();" type="button">Reset</button>
+            <div>
+                <label for="cssName">Select a KPI class:</label>
+                <select name="cssName" id="cssName">
+                    <option value="kpic-success">Success</option>
+                    <option value="kpic-danger">Danger</option>
+                    <option value="kpic-warning">Warning</option>
+                    <option value="#dadada">Color Gray</option>
+                    <option value="#ac3e31">Color Red</option>
+                </select>
+            </div>
+            <div>
+                <input type="checkbox" name="showsmall" id="showsmall"
+                    onchange="jQuery('.kpic-calendar,.kpic-calendar-fill').toggleClass('kpic-calendar-sm')">
+                <label for="showsmall"> Show small calendar view</label><br>
+            </div>
+            <div>
+                <input type="checkbox" checked name="showlegend" id="showlegend"
+                    onchange="toggleLegends(this)">
+                <label for="showsmall"> Show small calendar view</label><br>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div>
+            <div class="h3">Standard KPI Calendar View</div>
+            <div class="detail">A month view calendar that displays a color coded bar for each data Item. If more items
+                are present than visible, a counter will display</div>
+            <div class="mycalbox">
+                <div id="kpic1" class="kpic-calendar" data-truncateview="1" data-legend="#kpic1-legend"></div>
+                <div id="kpic1-legend" class="kpic-legend"></div>
+            </div>
+        </div>
+        <div>
+            <div class="h3">Fill KPI Calendar View for <span id="small-month-display"></span></div>
+            <div class="detail">A month view calendar that that fills the day of the month grid with a KPI color and a
+                optional text metric in the lower right. Supports only 1 data item per day</div>
+            <div class="mycalbox">
+                <div id="kpic2" data-truncateview="1" class="kpic-calendar-fill" data-legend="#kpic2-legend" 
+                    data-monthdisplay="#small-month-display" data-monthformat="short"></div>
+                <div id="kpic2-legend"></div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

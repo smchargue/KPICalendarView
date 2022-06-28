@@ -1,26 +1,143 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:wght@200;300;400;500;600;700&amp;display=swap);
-@import url(https://fonts.googleapis.com/css?family=Oswald:wght@200;300;400;500;600;700&amp;display=swap);
-.kpic-danger {
+.kpic-legend {
+  display: none;
+}
+.kpic-legend .kpic-legend-items {
+  background-color: #fff;
+  font-family: Roboto;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+  justify-content: center;
+}
+.kpic-legend .kpic-legend-items .kpic-legend-item {
+  font-size: 0.9rem;
+}
+.kpic-legend .kpic-legend-items .kpic-legend-item span.k-icon,
+.kpic-legend .kpic-legend-items .kpic-legend-item i {
+  font-size: 1.8rem;
+}
+.kpic-legend .kpic-legend-items .kpic-legend-item .kpic-danger {
+  background-color: #fff;
+  color: #B3001B;
+}
+.kpic-legend .kpic-legend-items .kpic-legend-item .kpic-warning {
+  background-color: #fff;
+  color: #F6AE2D;
+}
+.kpic-legend .kpic-legend-items .kpic-legend-item .kpic-success {
+  background-color: #fff;
+  color: #6B8F71;
+}
+.kpic-legend .kpic-legend-items .kpic-legend-item .kpic-gray {
+  background-color: #fff;
+  color: #a5a5a5;
+}
+.kpic-legend .kpic-legend-items .kpic-legend-item .kpic-accent1 {
+  background-color: #fff;
+  color: #7e909d;
+}
+.kpic-legend .kpic-legend-items .kpic-legend-item .kpic-accent2 {
+  background-color: #fff;
+  color: #1c4e80;
+}
+.kpic-legend .kpic-legend-items .kpic-legend-item .kpic-accent3 {
+  background-color: #fff;
+  color: #a5d8dd;
+}
+.kpic-legend .kpic-legend-items .kpic-legend-item .kpic-accent4 {
+  background-color: #fff;
+  color: #ea6a47;
+}
+.kpic-legend .kpic-legend-items .kpic-legend-item .kpic-accent5 {
+  background-color: #fff;
+  color: #0091d5;
+}
+.kpic-legend .kpic-legend-items .kpic-legend-item .kpic-accent6 {
+  background-color: #fff;
+  color: #488a99;
+}
+
+.kpic-calendar *,
+.kpic-calendar-fill * {
+  box-sizing: border-box;
+}
+.kpic-calendar .kpic-box,
+.kpic-calendar-fill .kpic-box {
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  border-top: 1px solid #dcdcdc;
+  border-left: 1px solid #dcdcdc;
+  border-right: none;
+  border-bottom: none;
+}
+.kpic-calendar .kpic-grid .kpic-box:nth-last-child(-n+7),
+.kpic-calendar-fill .kpic-grid .kpic-box:nth-last-child(-n+7) {
+  border-bottom: 0.5px solid #dcdcdc;
+}
+.kpic-calendar .kpic-box:nth-child(7n),
+.kpic-calendar-fill .kpic-box:nth-child(7n) {
+  border-right: 0.5px solid #dcdcdc;
+}
+.kpic-calendar .kpic-danger,
+.kpic-calendar-fill .kpic-danger {
   background-color: #B3001B;
+  color: #B3001B;
 }
-
-.kpic-warning {
+.kpic-calendar .kpic-warning,
+.kpic-calendar-fill .kpic-warning {
   background-color: #F6AE2D;
+  color: #F6AE2D;
 }
-
-.kpic-success {
+.kpic-calendar .kpic-success,
+.kpic-calendar-fill .kpic-success {
   background-color: #6B8F71;
+  color: #6B8F71;
+}
+.kpic-calendar .kpic-gray,
+.kpic-calendar-fill .kpic-gray {
+  background-color: #a5a5a5;
+  color: #a5a5a5;
+}
+.kpic-calendar .kpic-accent1,
+.kpic-calendar-fill .kpic-accent1 {
+  background-color: #7e909d;
+  color: #7e909d;
+}
+.kpic-calendar .kpic-accent2,
+.kpic-calendar-fill .kpic-accent2 {
+  background-color: #1c4e80;
+  color: #1c4e80;
+}
+.kpic-calendar .kpic-accent3,
+.kpic-calendar-fill .kpic-accent3 {
+  background-color: #a5d8dd;
+  color: #a5d8dd;
+}
+.kpic-calendar .kpic-accent4,
+.kpic-calendar-fill .kpic-accent4 {
+  background-color: #ea6a47;
+  color: #ea6a47;
+}
+.kpic-calendar .kpic-accent5,
+.kpic-calendar-fill .kpic-accent5 {
+  background-color: #0091d5;
+  color: #0091d5;
+}
+.kpic-calendar .kpic-accent6,
+.kpic-calendar-fill .kpic-accent6 {
+  background-color: #488a99;
+  color: #488a99;
 }
 
 .kpic-calendar {
   font-family: Roboto;
   color: #000;
-}
-.kpic-calendar .kpic-box {
-  height: 100%;
-  width: 100%;
-  background-color: #fff;
-  border: 1px solid #dcdcdc;
 }
 .kpic-calendar .kpic-header-row {
   display: grid;
@@ -28,14 +145,18 @@
   grid-template-rows: 40px;
 }
 .kpic-calendar .kpic-header-row .kpic-box .kpic-dow-text {
-  font-size: 14px;
+  font-size: 0.9rem;
   font-weight: 700;
   margin: 4px 4px;
 }
 .kpic-calendar .kpic-grid {
   display: grid;
   grid-template-columns: repeat(7, minmax(83px, 100px));
-  grid-template-rows: repeat(6, 80px);
+  grid-template-rows: repeat(auto-fill, 80px);
+}
+.kpic-calendar .kpic-grid .kpic-box {
+  max-height: 80px;
+  min-height: 80px;
 }
 .kpic-calendar .kpic-grid .kpic-box.kpic-has-items {
   display: grid;
@@ -51,16 +172,16 @@
   display: block;
   width: 20px;
   position: absolute;
-  top: 78%;
+  top: calc(80px - 1.1rem);
   z-index: 1;
   right: 4px;
   font-size: 0.8rem;
   padding: 0 0.2rem;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.65);
   color: white;
 }
 .kpic-calendar .kpic-grid .kpic-box .kpic-date-text {
-  font-size: 14px;
+  font-size: 0.75rem;
   margin: 4px 4px;
 }
 .kpic-calendar .kpic-grid .kpic-box.kpic-date-disabled {
@@ -77,7 +198,7 @@
   gap: 0.25em;
 }
 .kpic-calendar .kpic-grid .kpic-box .kpic-data-items .kpic-data-item {
-  width: 90%;
+  width: 80%;
   min-height: 5px;
   border-radius: 25px;
 }
@@ -89,69 +210,101 @@
   display: none;
 }
 
-.kpic-calendar-sm {
+.kpic-calendar-fill {
   font-family: Roboto;
   color: #000;
 }
-.kpic-calendar-sm .kpic-box {
-  height: 100%;
-  width: 100%;
-  background-color: #fff;
-  border: 1px solid #dcdcdc;
-}
-.kpic-calendar-sm .kpic-header-row {
+.kpic-calendar-fill .kpic-header-row {
   display: grid;
-  grid-template-columns: repeat(7, minmax(36px, 56px));
-  grid-template-rows: 24px;
+  grid-template-columns: repeat(7, minmax(83px, 100px));
+  grid-template-rows: 40px;
 }
-.kpic-calendar-sm .kpic-header-row .kpic-box .kpic-dow-text {
-  font-size: 0.65rem;
+.kpic-calendar-fill .kpic-header-row .kpic-box .kpic-dow-text {
+  font-size: 0.75rem;
   font-weight: 700;
   margin: 4px 4px;
 }
-.kpic-calendar-sm .kpic-grid {
+.kpic-calendar-fill .kpic-grid {
   display: grid;
-  grid-template-columns: repeat(7, minmax(36px, 56px));
-  grid-template-rows: repeat(6, 32px);
+  grid-template-columns: repeat(7, minmax(83px, 100px));
+  grid-template-rows: repeat(auto-fill, 80px);
 }
-.kpic-calendar-sm .kpic-grid .kpic-box {
+.kpic-calendar-fill .kpic-grid .kpic-box {
+  max-height: 80px;
+  min-height: 80px;
   padding: 0 0;
   margin: 0 0;
   position: relative;
 }
-.kpic-calendar-sm .kpic-grid .kpic-box .kpic-date-text {
-  font-size: 0.65rem;
+.kpic-calendar-fill .kpic-grid .kpic-box .kpic-date-text {
+  font-size: 0.75rem;
   margin: 2px 0 0 2px;
   z-index: 1;
   position: absolute;
 }
-.kpic-calendar-sm .kpic-grid .kpic-box.kpic-date-current {
+.kpic-calendar-fill .kpic-grid .kpic-box.kpic-date-current {
   background-color: #dfecf5;
 }
-.kpic-calendar-sm .kpic-grid .kpic-box.kpic-date-disabled {
+.kpic-calendar-fill .kpic-grid .kpic-box.kpic-date-disabled {
   color: #b4b4b4;
 }
-.kpic-calendar-sm .kpic-grid .kpic-box .kpic-data-items {
+.kpic-calendar-fill .kpic-grid .kpic-box .kpic-data-items {
   position: relative;
 }
-.kpic-calendar-sm .kpic-grid .kpic-box .kpic-data-items .kpic-data-item {
+.kpic-calendar-fill .kpic-grid .kpic-box .kpic-data-items .kpic-data-item {
   width: 100%;
-  height: 32px;
+  height: 80px;
   position: absolute;
   top: -1px;
   left: -1px;
   color: #fff;
-  font-size: 0.75rem;
+  font-size: 1rem;
   border-radius: 0;
 }
-.kpic-calendar-sm .kpic-grid .kpic-box .kpic-data-items .kpic-data-item .kpic-data-item-inner {
+.kpic-calendar-fill .kpic-grid .kpic-box .kpic-data-items .kpic-data-item .kpic-data-item-inner {
   position: absolute;
-  bottom: 4px;
-  right: 8px;
+  top: calc(80px - 1.5rem);
+  right: 1rem;
 }
-.kpic-calendar-sm .kpic-grid .kpic-box .kpic-data-items-count {
+.kpic-calendar-fill .kpic-grid .kpic-box .kpic-data-items-count {
   display: none !important;
 }
-.kpic-calendar-sm .kpic-grid .kpic-box.kpic-has-items .kpic-date-text {
+.kpic-calendar-fill .kpic-grid .kpic-box.kpic-has-items .kpic-date-text {
   color: #fff;
+}
+
+.kpic-calendar-sm .kpic-header-row {
+  grid-template-columns: repeat(7, minmax(36px, 56px));
+  grid-template-rows: 32px;
+}
+.kpic-calendar-sm .kpic-header-row .kpic-box .kpic-dow-text {
+  font-size: 0.65rem;
+  margin: 4px 4px;
+}
+.kpic-calendar-sm .kpic-grid {
+  grid-template-columns: repeat(7, minmax(36px, 56px));
+  grid-template-rows: repeat(6, 32px);
+}
+.kpic-calendar-sm .kpic-grid .kpic-box {
+  min-height: 32px;
+}
+.kpic-calendar-sm .kpic-grid .kpic-box .kpic-date-text {
+  font-size: 0.65rem;
+}
+.kpic-calendar-sm .kpic-grid .kpic-box .kpic-data-items .kpic-data-item {
+  color: #fff;
+  font-size: 0.75rem;
+}
+
+.kpic-calendar-fill.kpic-calendar-sm .kpic-grid .kpic-box .kpic-data-items .kpic-data-item {
+  height: 32px;
+}
+.kpic-calendar-fill.kpic-calendar-sm .kpic-grid .kpic-box .kpic-data-items .kpic-data-item .kpic-data-item-inner {
+  position: absolute;
+  top: calc(32px - 1rem);
+  right: 0.5rem;
+}
+
+.kpic-calendar.kpic-calendar-sm .kpic-grid .kpic-box.kpic-has-items .kpic-data-items-count {
+  top: 0.1rem;
 }/*# sourceMappingURL=kpicalendar.css.map */
