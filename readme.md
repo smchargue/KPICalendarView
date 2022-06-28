@@ -7,7 +7,11 @@ Key Notes:
 
 - The Calendar is generated completely with CSS Grids.  This makes updating the look and feel much easier compared to HTML Table based systems. 
 - This serves a very specific purpose which, again, will make maintenance and modifications easier.  You are not fighting features that are more in the way than helpful. 
+- An optional legend can be generated for the data items that are displayed in the current view. 
+- The colors used by the KPI items can be created using css classes, or passing in color values in the add item method.
 - This solution uses jQuery; ensure that jQuery is loaded before the object is created. 
+
+A prototype can be viewed in codepen [here](https://codepen.io/smchargue/pen/bGLXjER)
 
 ## Table of Contents
 
@@ -15,6 +19,7 @@ Key Notes:
   - [Table of Contents](#table-of-contents)
   - [Views](#views)
     - [Standard](#standard)
+    - [Fill](#fill)
     - [Small](#small)
   - [DOM Structure](#dom-structure)
   - [Create Calendar View / Object](#create-calendar-view--object)
@@ -30,18 +35,23 @@ Key Notes:
     - [addItem(key, cssClass, title, text, color, uid)](#additemkey-cssclass-title-text-color-uid)
       - [Examples](#examples)
     - [resetItems()](#resetitems)
+    - [setLegendSelector(s)](#setlegendselectors)
 
 ## Views 
 There are 2 type of calendar views - standard and small.  This is as much a designation of purpose as it is size. 
 
 ### Standard
-Uses the css class name *kpic-calendar*. Useful when you wish to display multiple indicators per calendar day (as many as will fit in the box). 
+Uses the css class name *kpic-calendar*. Useful when you wish to display multiple indicators per calendar day (as many as will fit in the box). If the number of kpi indicators is greater than the height of the day of the month box, a counter will be shown in the lower right corner.
 
 ![](./readme.img/kpic-calendar.png)
 
-### Small 
-Uses the css class name *kpic-calendar-sm*. This view is used when you have a single data item per calendar day, and can display optional text along with the kpi color. 
+### Fill 
+Uses the css class name *kpic-calendar-fill*. This view is used when you have a single data item per calendar day. The kpi color will fill the day of the month box and an optional text value may display in the lower right corner.
 
+![](./readme.img/kpic-calendar-fill.png)
+
+### Small
+Both calendar types can be set to a small factor 
 ![](./readme.img/kpic-calendar-sm.png)
 
 ## DOM Structure 
@@ -89,7 +99,7 @@ The kpi-items container will contain a div for each kpi item, its key components
 
 ## Create Calendar View / Object
 
-Create an element to serve as the Calendar View container.  The container must have either the css class kpic-calendar or kpic-calendar-sm. In a script block instantiate the calendar object. The variable kpic is used in this documentation, but can be any valid javascript variable name.  This code will create a new object of type kpiCalendar.
+Create an element to serve as the Calendar View container.  The container must have either the css class kpic-calendar or kpic-calendar-fill. In a script block instantiate the calendar object. The variable kpic is used in this documentation, but can be any valid javascript variable name.  This code will create a new object of type kpiCalendar.
 
 ### Example
 
@@ -100,7 +110,7 @@ Create an element to serve as the Calendar View container.  The container must h
     </script>
 ```
 
-> note that  ``` new kpiCalendar('') ``` will try and use the first instance of an element of .kpic-calendar or .kpic-calendar-sm.
+> note that  ``` new kpiCalendar('') ``` will try and use the first instance of an element of .kpic-calendar or .kpic-calendar-fill.
 
 Once created, you will manipulate the view using public methods of the kpiCalendar object. You should avoid direct manipulation of the DOM Element. 
 
@@ -108,16 +118,25 @@ Once created, you will manipulate the view using public methods of the kpiCalend
 Some data attributes may be used when creating the calendar object 
 - truncateview 
 ```html
-<div id="kpic2" class="kpic-calendar-sm" data-truncateview="0"></div>
+<div id="kpic2" class="kpic-calendar-fill" data-truncateview="0"></div>
 ``` 
 Set the truncateview value to false. This will force the calendar view to always show 6 weeks.
 
 - monthdisplay, monthformat 
 ```html
 <div> small month = <span id="small-month-display"></span></div>
-<div id="kpic2" class="kpic-calendar-sm" data-monthdisplay="#small-month-display" data-monthformat="short"></div>
+<div id="kpic2" class="kpic-calendar-fill" data-monthdisplay="#small-month-display" data-monthformat="short"></div>
 ```
 For kpic2, set the element #small-month-display to receive the name of the month when it is changed, uses short format; Use long if monthformat is not specified. 
+
+- legend
+```html
+<div id="kpic2" data-legend="#kpic2-legend" /> 
+``` 
+The legend for a calendar object is an independed DOM element.  It is not contained in or required as part of the calendar view.  Therefore it can be placed anywhere 
+in the layout of the page where it may be needed. 
+
+The legend can be created on the initial contruction or via the setLegendSelector method (see below) 
   
 
 ## Properties 
@@ -127,7 +146,8 @@ The calendar object will have the following public properties
 | ---- | ---- | ----- | 
 | elem | jQuery Object | This is the jQuery object of the calendar vie. In our example ```jQuery('#kpic1") === kpic.elem``` | 
 | activeDate | datetime object | The first day of the currently displayed month | 
-| legendItems | array | An Array of object created by the addListItem method.  All kpi data items are stored in this array, so when a month view is built, the proper KPI items can be added to the view | 
+| type | string | Standard \| Fill |
+| kpiItems | array | An Array of object created by the addListItem method.  All kpi data items are stored in this array, so when a month view is built, the proper KPI items can be added to the view | 
 | truncateView | boolean | Default is true, If "falsey" then show 7 weeks in the view, if true, then truncate the last week of sunday is the first day of the next month |
 
 
@@ -185,7 +205,7 @@ Once the calendar object has been created, you can add kpi data elements. The mi
 
 | Parameter | R/O | Default Value | Note |
 | --------- | --- | --------- | --------- |
-| key       | Required | none | Date String in ISO Format yyyy-MM-dd |
+| key       | Required | none | Date String in ISO Format yyyy-MM-dd. This may also be an object with the matching properties |
 | cssClass  | Optional | see below | css lass, if available, is used in addition to kpic-data-item-default, not instead of. Your custom css will typically set the background/border colors, and height of the kpi item in the standard view.  |
 | title     | Optional | none | Added as the hover over title of the element |
 | text      | Optional | none | Inserted as text in the kpic-data-item-inner element; Usable only for the small calendar view   |
@@ -195,6 +215,8 @@ Once the calendar object has been created, you can add kpi data elements. The mi
 > The default css class name will be ***kpic-data-item kpic-data-item-default***.  When you supply a value for the cssClass parameter, it will be used in place of kpic-data-item-default ***kpic-data-item your-class***. 
 >
 > For more information review declarations for ***kpic-data-items*** in the *kpicalendar.scss* file.
+
+> you can pass a single object to addItem with the same properties listed in the parameters. Where obj.key is the required date key, and the other property names are the same as the arguement list. 
 
 
 the full method signature is : 
@@ -217,6 +239,14 @@ switch (cssName) {
     default : 
         lgc2.addItem(d, cssName, '', '8.2');
 }
+
+var newItem = {
+        key: '2022-06-20',
+        label: someLabel,
+        cssClass: '',
+        color: someColor
+    }
+lgc1.addItem(newItem);
 ```
 
 
@@ -226,3 +256,16 @@ Call to reset the calendar view, eliminating all data elements from the view and
 kpic.resetItems();
 ```
 
+### setLegendSelector(s)
+Will set or hide the legend for the calendar object. The legend is an independent DOM element
+```javascript 
+function toggleLegends(elem) {
+    if (elem.checked) {
+        lgc1.setLegendSelector('#lgc1-legend');
+        lgc2.setLegendSelector('#lgc2-legend'); 
+    } else {
+        lgc1.setLegendSelector();
+        lgc2.setLegendSelector(); 
+    }
+}
+```
