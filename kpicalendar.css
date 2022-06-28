@@ -1,0 +1,157 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:wght@200;300;400;500;600;700&amp;display=swap);
+@import url(https://fonts.googleapis.com/css?family=Oswald:wght@200;300;400;500;600;700&amp;display=swap);
+.kpic-danger {
+  background-color: #B3001B;
+}
+
+.kpic-warning {
+  background-color: #F6AE2D;
+}
+
+.kpic-success {
+  background-color: #6B8F71;
+}
+
+.kpic-calendar {
+  font-family: Roboto;
+  color: #000;
+}
+.kpic-calendar .kpic-box {
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #dcdcdc;
+}
+.kpic-calendar .kpic-header-row {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(83px, 100px));
+  grid-template-rows: 40px;
+}
+.kpic-calendar .kpic-header-row .kpic-box .kpic-dow-text {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 4px 4px;
+}
+.kpic-calendar .kpic-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(83px, 100px));
+  grid-template-rows: repeat(6, 80px);
+}
+.kpic-calendar .kpic-grid .kpic-box.kpic-has-items {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: -webkit-min-content 1fr -webkit-min-content;
+  grid-template-rows: min-content 1fr min-content;
+  position: relative;
+}
+.kpic-calendar .kpic-grid .kpic-box.kpic-has-items .kpic-data-items {
+  overflow: hidden;
+}
+.kpic-calendar .kpic-grid .kpic-box.kpic-has-items .kpic-data-items-count {
+  display: block;
+  width: 20px;
+  position: absolute;
+  top: 78%;
+  z-index: 1;
+  right: 4px;
+  font-size: 0.8rem;
+  padding: 0 0.2rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+.kpic-calendar .kpic-grid .kpic-box .kpic-date-text {
+  font-size: 14px;
+  margin: 4px 4px;
+}
+.kpic-calendar .kpic-grid .kpic-box.kpic-date-disabled {
+  color: #b4b4b4;
+}
+.kpic-calendar .kpic-grid .kpic-box.kpic-date-current {
+  background-color: #dfecf5;
+}
+.kpic-calendar .kpic-grid .kpic-box .kpic-data-items {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  place-items: center;
+  gap: 0.25em;
+}
+.kpic-calendar .kpic-grid .kpic-box .kpic-data-items .kpic-data-item {
+  width: 90%;
+  min-height: 5px;
+  border-radius: 25px;
+}
+.kpic-calendar .kpic-grid .kpic-box .kpic-data-items .kpic-data-item.kpic-data-item-default {
+  background-color: #0097a7;
+  border: 1px solid #0097a7;
+}
+.kpic-calendar .kpic-grid .kpic-box .kpic-data-items-count {
+  display: none;
+}
+
+.kpic-calendar-sm {
+  font-family: Roboto;
+  color: #000;
+}
+.kpic-calendar-sm .kpic-box {
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #dcdcdc;
+}
+.kpic-calendar-sm .kpic-header-row {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(36px, 56px));
+  grid-template-rows: 24px;
+}
+.kpic-calendar-sm .kpic-header-row .kpic-box .kpic-dow-text {
+  font-size: 0.65rem;
+  font-weight: 700;
+  margin: 4px 4px;
+}
+.kpic-calendar-sm .kpic-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(36px, 56px));
+  grid-template-rows: repeat(6, 32px);
+}
+.kpic-calendar-sm .kpic-grid .kpic-box {
+  padding: 0 0;
+  margin: 0 0;
+  position: relative;
+}
+.kpic-calendar-sm .kpic-grid .kpic-box .kpic-date-text {
+  font-size: 0.65rem;
+  margin: 2px 0 0 2px;
+  z-index: 1;
+  position: absolute;
+}
+.kpic-calendar-sm .kpic-grid .kpic-box.kpic-date-current {
+  background-color: #dfecf5;
+}
+.kpic-calendar-sm .kpic-grid .kpic-box.kpic-date-disabled {
+  color: #b4b4b4;
+}
+.kpic-calendar-sm .kpic-grid .kpic-box .kpic-data-items {
+  position: relative;
+}
+.kpic-calendar-sm .kpic-grid .kpic-box .kpic-data-items .kpic-data-item {
+  width: 100%;
+  height: 32px;
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  color: #fff;
+  font-size: 0.75rem;
+  border-radius: 0;
+}
+.kpic-calendar-sm .kpic-grid .kpic-box .kpic-data-items .kpic-data-item .kpic-data-item-inner {
+  position: absolute;
+  bottom: 4px;
+  right: 8px;
+}
+.kpic-calendar-sm .kpic-grid .kpic-box .kpic-data-items-count {
+  display: none !important;
+}
+.kpic-calendar-sm .kpic-grid .kpic-box.kpic-has-items .kpic-date-text {
+  color: #fff;
+}/*# sourceMappingURL=kpicalendar.css.map */

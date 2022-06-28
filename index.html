@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSS Legend Calendar Test</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="kpicalendar.css">
 </head>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
     integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
@@ -15,15 +15,6 @@
 
 <style>
     
-    .kpic-danger {
-        background-color:#B3001B;        
-    }
-    .kpic-warning {
-        background-color:#F6AE2D;
-    }
-    .kpic-success {
-        background-color:#6B8F71;
-    }
     
 /* for prototype testing */
 body {
@@ -72,16 +63,16 @@ div[class^='kpic-calendar'] {
         <button onclick="addMonth(-1);" type="button">Prev</button>
         <div class="current-month"></div>
         <button onclick="addMonth(1);" type="button">Next</button>
-        <input type="date" id="testDateInput" name="testDateInput" value="2022-06-24">        
-        <button onclick="lgc2.resetLegendItems();lgc1.resetLegendItems();" type="button">Reset</button>
+        <input type="date" id="testDateInput" name="testDateInput" value="">        
+        <button onclick="lgc2.resetItems();lgc1.resetItems();" type="button">Reset</button>
         <label for="cssName">Select a KPI class:</label>
         <select name="cssName" id="cssName">
             <option value="kpic-success">success</option>
             <option value="kpic-danger">danger</option>
             <option value="kpic-warning">warning</option>            
         </select>
-    </div>
-    
+        <div> small month = <span id="small-month-display"></span></div>
+    </div>    
     
     <div class="container">
         <div>
@@ -92,7 +83,7 @@ div[class^='kpic-calendar'] {
         <div>
             <div class="h3">Small KPI Calendar View</div>
             <div class="detail">Displays a Small "KPI" Calendar with the day box filled with a color coded KPI; support only 1 data item per day</div>
-            <div id="kpic2" class="kpic-calendar-sm" data-truncateview="0"></div>
+            <div id="kpic2" class="kpic-calendar-sm" data-monthdisplay="#small-month-display" data-monthformat="short"></div>
     </div>
     </div>
     <div>
@@ -101,23 +92,32 @@ div[class^='kpic-calendar'] {
     <script defer="defer">
         var lgc, lgc2;
         jQuery(document).ready(function () {
+            // create the 2 calendar objects/views 
             lgc1 = new kpiCalendar('#kpic1');
             lgc2 = new kpiCalendar('#kpic2');
-            lgc1.setMonthDisplay('.toolbar .current-month','long');
+            lgc1.setMonthDisplay('.toolbar .current-month','long', function(d) {
+                jQuery('#testDateInput').val(d.toISOString().slice(0,10));
+            });
 
             /* testing code */
-            lgc2.addLegendItem('2022-06-15','kpic-danger','','3.5');
-            lgc2.addLegendItem('2022-06-17','kpic-success','','9.2');
-            lgc2.addLegendItem('2022-06-19','kpic-warning','','6.0');
-            lgc2.addLegendItem('2022-07-20','kpic-success','','8.0');
+            lgc2.addItem('2022-06-15','kpic-danger','','3.5');
+            lgc2.addItem('2022-06-17','kpic-success','','9.2');
+            lgc2.addItem('2022-06-19','kpic-warning','','6.0');
+            lgc2.addItem('2022-07-20','kpic-success','','8.0');
 
-            lgc1.addLegendItem('2022-06-15','kpic-success');
-            lgc1.addLegendItem('2022-06-17','kpic-success');
-            lgc1.addLegendItem('2022-06-19','kpic-warning');
-            lgc1.addLegendItem('2022-07-20','kpic-success');
+            lgc1.addItem('2022-06-15','','This is a default kpi item, you will see this text when you hover over.');
+            lgc1.addItem('2022-06-17','kpic-success');
+            lgc1.addItem('2022-06-19','kpic-warning');
+            lgc1.addItem('2022-07-20','kpic-success');
             
 
-            lgc1.addLegendItem('2022-06-15','kpic-danger');
+            lgc1.addItem('2022-06-15','kpic-danger');
+
+            for (var x = 0; x < 10; x++) {
+                    lgc1.addItem('2022-06-16');
+                    lgc1.addItem('2022-07-20','kpic-warning');
+                }
+
 
             jQuery('#testDateInput').on("change", (e) => {
                 var d = e.target.value;
@@ -125,18 +125,18 @@ div[class^='kpic-calendar'] {
                 lgc1.setMonth( dt.getMonth(), dt.getFullYear());
                 lgc2.setMonth( dt.getMonth(), dt.getFullYear());
                 var cssName = jQuery('#cssName').val(); 
-                lgc1.addLegendItem(d, cssName);
+                lgc1.addItem(d, cssName);
 
                 // mimic a missing time KPI based on cssName 
                 switch (cssName) {
                     case 'kpic-danger' : 
-                        lgc2.addLegendItem(d, cssName, '', '3.2');
+                        lgc2.addItem(d, cssName, '', '3.2');
                         break;
                     case 'kpic-warning' :
-                        lgc2.addLegendItem(d, cssName, '', '6.2');
+                        lgc2.addItem(d, cssName, '', '6.2');
                         break;
                     default : 
-                        lgc2.addLegendItem(d, cssName, '', '8.2');
+                        lgc2.addItem(d, cssName, '', '8.2');
                 }
                 
             });

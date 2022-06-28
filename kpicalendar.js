@@ -9,54 +9,71 @@ class kpiCalendar {
 
         // activeDate is the first day of the month of the current calendar view.
         this.activeDate = new Date(this.#validYear(year), this.#validMonth(month), 1);
-        this.elem = jQuery(selector || '.kpic-calendar').first();
+        this.elem = jQuery(selector || '.kpic-calendar, .kpic-calendar-sm').first();
         
         // if true then do not display week 7 if not in current month, false (default) show only last week of view 
         this.truncateView = typeof this.elem.data("truncateview") === 'undefined' ? 1 : this.elem.data("truncateview");
+        if (this.elem.data('monthdisplay')) {
+            var fmt = this.elem.data('monthformat') || 'long'; 
+            this.setMonthDisplay(this.elem.data('monthdisplay'),fmt);
+        }
 
         this.legendItems = [];
         this.#buildCalendarElement();
+        
     }
 
     // Public Methods 
-    setMonthDisplay(selector, format) {
+    setMonthDisplay(selector, format, callback) {
         this.monthDisplay = {
             elem : jQuery(selector),
-            format : format || 'long'
+            format : format || 'long',
+            callback : callback || null
         }
-        this.#updateMonthName();
+        this.#updateMonthName();        
     }
 
-    setMonth(month, year) {        
+    setMonth(month, year, callback) {        
         var newDate = new Date(this.#validYear(year), this.#validMonth(month), 1);
         if (newDate.toDateString() !== this.activeDate.toDateString()) {
             this.activeDate = new Date(newDate);
             this.#buildCalendarElement();
         }
+        if (typeof callback === "function") {
+            callback(this.activeDate)
+        };
     }
 
-    addMonth(v) {
+    addMonth(v,callback) {
+        if (!parseInt(v)) {
+            return;
+        }
         var nd = new Date(this.activeDate);
-        this.activeDate = new Date(nd.setMonth(nd.getMonth() + v))
-        this.#buildCalendarElement();
+        nd = new Date(nd.setMonth(nd.getMonth() + v));
+        this.setMonth(nd.getMonth(), nd.getFullYear(), callback);
     }
 
-    addLegendItem(key, cssClassName, title, text, uid) {
+    addItem(key, cssClass, title, text, color, uid) {
         // add a legend item, 
         var legendItem = {
             key: key,
-            cssClassName: cssClassName || 'kpic-data-item-default',
+            cssClass: cssClass || 'kpic-data-item-default',
             title: title || '',
             text : text || '',
+            color: color || '',
             uid : uid || this.#uuid()
         }
         this.legendItems.push(legendItem);
-        this.#addLegendDOMItem(legendItem);
+        this.#addKpiDomItem(legendItem);
     }
 
-    resetLegendItems() {
+    resetItems() {
         this.legendItems = [];
         this.elem.find('.kpic-data-item').remove();
+    }
+
+    getISODate() {
+        return this.activeDate.toISOString().slice(0,10);
     }
 
     // Private Methods 
@@ -65,6 +82,9 @@ class kpiCalendar {
             const date = new Date(this.activeDate);
             const month = date.toLocaleString('default', { month: this.monthDisplay.format });
             this.monthDisplay.elem.text(month);
+        }
+        if (typeof this.monthDisplay?.callback === "function") {
+            this.monthDisplay.callback(this.activeDate);
         }
     }
     #validMonth (month) {
@@ -82,15 +102,36 @@ class kpiCalendar {
         return year 
     }
 
-    #addLegendDOMItem(item) {
+    #addKpiDomItem(item) {
+        var cssClass = "kpic-data-item";
+        if (item.cssClass) {
+            cssClass += ` ${item.cssClass}`;
+        } else {
+            cssClass += 'kpic-data-item-default';
+        }
+        var cssStyle = '';
+        if (item.color) {
+            cssStyle = `background-color:${item.color};border-color:${item.color};`
+        }
         var selector = `.kpic-box[data-date="${item.key}"]`;
         var itemSelector = `.kpic-data-item[data-uid="${item.uid}"]`;
-        if (jQuery(itemSelector).length === 0) {
-            var e = `<div data-uid="${item.uid}" class="kpic-data-item ${item.cssClassName}" title="${item.title}">
+        var $box = this.elem.find(selector);
+        if ($box.length > 0 && jQuery(itemSelector).length === 0) {
+            var e = 
+            `<div data-uid="${item.uid}" class="${cssClass}" title="${item.title}" style="${cssStyle}">
                 <div class="kpic-data-item-inner">${item.text}</div>
             </div>`;
             this.elem.find(selector).addClass('kpic-has-items').find('.kpic-data-items').append(e);
+
+            // calculate whether there are kpi items that are below the bottom (hidden) of the date box.             
+            var boxBottom =  $box.offset().top + $box.innerHeight();
+            var lastItem = $box.find('.kpic-data-item:last-child') ;
+            if (lastItem.offset().top > boxBottom) {
+                var count = parseInt($box.find('.kpic-data-items-count').text()) || 0;
+                $box.find('.kpic-data-items-count').show().text(`+${count + 1}`);
+            }
         }        
+        
     }
 
     #buildCalendarElement() {
@@ -126,7 +167,7 @@ class kpiCalendar {
                 dateClass += " kpic-date-disabled";
             }
             if (currentDate.toDateString() === today.toDateString()) {
-                dateClass += " kpic-datecurrent";
+                dateClass += " kpic-date-current";
             }
 
             var dateKey = currentDate.toISOString().slice(0, 10);
@@ -135,6 +176,7 @@ class kpiCalendar {
             var d = `<div class="${dateClass}" data-date="${dateKey}" data-uuid="[${dateId}">
                         <div class="kpic-date-text">${currentDate.getDate()}</div>
                         <div class="kpic-data-items"></div>
+                        <div class="kpic-data-items-count"></div>
                     </div>`;
             $grid.append(d);
 
@@ -149,7 +191,7 @@ class kpiCalendar {
         // if there are elements in the legend, re-add them to the new calendar 
         // lovely use of arrow function here, since it doesn't jerk around with 'this'        
         this.legendItems.forEach( item => {
-            this.#addLegendDOMItem(item);
+            this.#addKpiDomItem(item);
         });
 
         this.#updateMonthName();
