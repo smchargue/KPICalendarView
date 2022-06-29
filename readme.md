@@ -11,7 +11,7 @@ Key Notes:
 - The colors used by the KPI items can be created using css classes, or passing in color values in the add item method.
 - This solution uses jQuery; ensure that jQuery is loaded before the object is created. 
 
-A prototype can be viewed in codepen [here](https://codepen.io/smchargue/pen/bGLXjER)
+A prototype can be viewed in codePen [here](https://codepen.io/smchargue/pen/bGLXjER)
 
 ## Table of Contents
 
@@ -68,7 +68,7 @@ The grid consist of a box for each day in the display. This box will have a data
 The kpi-items container will contain a div for each kpi item, its key components are
 - optional hover over text of the KPI item 
 - A css class name to govern the color and size of the kpi item 
-- an optional inner div to contain visible text for the item. Typically usefuly for the small view as opposed to the standard view 
+- an optional inner div to contain visible text for the item. Useful for the small view as opposed to the standard view 
 
 ```html
 <div class="kpic-calendar">
@@ -133,10 +133,10 @@ For kpic2, set the element #small-month-display to receive the name of the month
 ```html
 <div id="kpic2" data-legend="#kpic2-legend" /> 
 ``` 
-The legend for a calendar object is an independed DOM element.  It is not contained in or required as part of the calendar view.  Therefore it can be placed anywhere 
+The legend for a calendar object is an independent DOM element.  It is not contained in or required as part of the calendar view.  Therefore it can be placed anywhere 
 in the layout of the page where it may be needed. 
 
-The legend can be created on the initial contruction or via the setLegendSelector method (see below) 
+The legend can be created on the initial construction or via the setLegendSelector method (see below) 
   
 
 ## Properties 
@@ -158,7 +158,7 @@ Sets an element in your page to be updated when the month of the calendar view i
 
 | Parameter | R/O | Default Value | Note |
 | --------- | --- | --------- | --------- |
-| selector | Required | n/a | any valid jQuery selector string.  When called the element will be updated immeidately with the current month |
+| selector | Required | n/a | any valid jQuery selector string.  When called the element will be updated immediately with the current month |
 | format | Optional | long | Uses date.toLocalString to return the month name. Valid values are : long \| short  |
 | callback | Optional | n/a | Optional function to call after the month name has been updated.  This can also serve as a function to call anytime the month is changed. The current active date will be passed to the callback function. 
 
@@ -196,8 +196,8 @@ Returns the active date as a string in the format yyyy-MM-dd - the day will alwa
 
 ```javascript
 kpic.setMonth(6,2022);
-var dstr = kpic.getISODate();
-console.log(dstr);  // writes 2022-07-01 
+var dateStr = kpic.getISODate();
+console.log(dateStr);  // writes 2022-07-01 
 ```
 
 ### addItem(key, cssClass, title, text, color, uid)
@@ -216,7 +216,7 @@ Once the calendar object has been created, you can add kpi data elements. The mi
 >
 > For more information review declarations for ***kpic-data-items*** in the *kpicalendar.scss* file.
 
-> you can pass a single object to addItem with the same properties listed in the parameters. Where obj.key is the required date key, and the other property names are the same as the arguement list. 
+> you can pass a single object to addItem with the same properties listed in the parameters. Where obj.key is the required date key, and the other property names are the same as the argument list. 
 
 
 the full method signature is : 

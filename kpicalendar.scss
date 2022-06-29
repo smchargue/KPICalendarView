@@ -103,12 +103,6 @@ $calendar-legend-font-size: 0.9rem;
         border-right: .5px solid $calendar-border-color;
     }
 
-    .kpic-grid {
-
-
-        .kpic-box {}
-    }
-
     @each $c,
     $v in $kpi-colors {
         .kpic-#{$c} {
