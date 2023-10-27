@@ -14,7 +14,7 @@ class kpiCalendar {
         this.type = (this.elem.hasClass('kpic-calendar')) ? 'standard' : 'fill';
 
         // if true then do not display week 7 if not in current month, false (default) show only last week of view 
-        this.truncateView = typeof this.elem.data("truncateview") === 'undefined' ? 1 : this.elem.data("truncateview");
+        this.truncateView = typeof this.elem.data("truncateview") === 'undefined' ? true : this.elem.data("truncateview") == "1";
         if (this.elem.data('monthdisplay')) {
             var fmt = this.elem.data('monthformat') || 'long';
             this.setMonthDisplay(this.elem.data('monthdisplay'), fmt);
@@ -96,7 +96,8 @@ class kpiCalendar {
 
     resetItems() {
         this.kpiItems = [];
-        this.elem.find('.kpic-data-item').remove();
+        this.elem.find('.kpic-data-items').empty();
+        this.elem.find('.kpic-data-items-count').text('');
     }
 
     getISODate() {
@@ -140,15 +141,23 @@ class kpiCalendar {
 
     // Private Methods 
     #updateMonthName() {
+        var month; 
         if (this.monthDisplay) {
             const date = new Date(this.activeDate);
-            const month = date.toLocaleString('default', { month: this.monthDisplay.format });
+            if (this.monthDisplay.format === 'long' || this.monthDisplay.format === 'short') {
+                month = date.toLocaleString('default', { month: this.monthDisplay.format });
+            } else if (typeof kendo === 'object') {
+                month = kendo.toString(date, this.monthDisplay.format);
+            } else {
+                month = date.toLocaleString('default', { month: 'long'});
+            }
             this.monthDisplay.elem.text(month);
         }
         if (typeof this.monthDisplay?.callback === "function") {
             this.monthDisplay.callback(this.activeDate);
         }
     }
+
     #validMonth(month) {
         var d = new Date();
         if (typeof month === 'undefined' || parseInt(month) < 0 || parseInt(month) > 11) {
