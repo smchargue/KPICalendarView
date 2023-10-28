@@ -15,7 +15,11 @@ class kpiCalendar {
 
         this.elem = jQuery(selector || '.kpic-calendar, .kpic-calendar-fill').first();
 
+        // standard has a bar for as many types of events can fit in the box;
+        // fill will set the color of the entire box to the color of the last event type
         this.type = (this.elem.hasClass('kpic-calendar')) ? 'standard' : 'fill';
+        // subtle is a type of fill, but includes a simple clickable container that give the number of events for that day
+        this.fillType = (this.elem.hasClass('kpic-calendar-subtle')) ? 'standard' : 'subtle';
 
         // if true then do not display week 7 if not in current month, false (default) show only last week of view 
         //this.truncateView = typeof this.elem.data("truncateview") === 'undefined' ? 1 : this.elem.data("truncateview");
@@ -245,7 +249,9 @@ class kpiCalendar {
             if (this.type === 'fill') {
                 // add only the last data item for a calendar of type fill.
                 $box.find('.kpic-data-items .kpic-data-item').remove();
-                item.text = eventHub.getItemCountByKey(item.key);
+                if (this.fillType === 'subtle') {
+                    item.text = eventHub.getItemCountByKey(item.key);
+                }
             }
 
             var e = `<div data-uid="${item.uid}" class="${cssClass}" title="${item.title}" style="${cssStyle}">
